@@ -53,30 +53,26 @@
 
 # @lc code=start
 class Solution:
-    def helper(
-        self,
-        r: List[List[int]],
-        nums: List[int],
-        low: int,
-        high: int,
-        remain: int,
-        length: int
-    ) -> None:
-        if 0 == remain:
-            r.append(nums[:length])
-            return
-
-        if high - low < remain:
-            return
-
-        for i in range(low, high, 1):
-            self.helper(r, nums + [i], i+1, high, remain-1, length)
-
     def combine(self, n: int, k: int) -> List[List[int]]:
         if 1 == n and 1 == k:
             return [[1]]
 
         r = []
-        self.helper(r, [], 1, n+1, k, k)
+        def helper(
+            nums: List[int],
+            low: int,
+            remain: int,
+        ) -> None:
+            if 0 == remain:
+                r.append(nums[:k])
+                return
+
+            if n + 1 - low < remain:
+                return
+
+            for i in range(low, n+1, 1):
+                helper(nums + [i], i+1, remain-1)
+
+        helper([], 1, k)
         return r
 # @lc code=end
