@@ -47,25 +47,22 @@
 
 # @lc code=start
 class Solution:
-    def helper(
-        self,
-        r: List[List[int]],
-        nums: List[int],
-        n: List[int],
-        start: int
-    ) -> None:
-        r.append(n)
-        if start >= len(nums):
-            return
-
-        for i in range(start, len(nums)):
-            self.helper(r, nums, n + [nums[i]], i+1)
-
     def subsets(self, nums: List[int]) -> List[List[int]]:
         if 1 == len(nums):
             return [[], nums]
 
         r = []
-        self.helper(r, nums, [], 0)
+        def helper(
+            n: List[int],
+            start: int
+        ) -> None:
+            r.append(n)
+            if start >= len(nums):
+                return
+
+            for i in range(start, len(nums)):
+                helper(n + [nums[i]], i+1)
+
+        helper([], 0)
         return r
 # @lc code=end
