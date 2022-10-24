@@ -48,13 +48,11 @@ class Solution:
         def helper(prev, start):
             if start >= len(nums):
                 return
-            cur = [e for e in prev]
-            cur.append(nums[start])
-            r.append(cur)
+            r.append(prev + [nums[start]])
             for i in range(start+1, len(nums)):
                 if i > start+1 and nums[i] == nums[i-1]:
                     continue
-                helper(cur, i)
+                helper(prev + [nums[start]], i)
             return
 
         for i in range(len(nums)):
