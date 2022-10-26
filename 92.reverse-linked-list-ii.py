@@ -59,26 +59,18 @@ class Solution:
         if left == right:
             return head
 
-        distance = right - left
-        cur, prev_left, left_p, right_next = head, None, None, None
-        for i in range(1, right+2):
-            if None is cur:
-                break
-            if i + 1 == left:
+        dummy = ListNode(0, head)
+        prev_left, left_p, cur = None, None, dummy
+        for i in range(0, right+1):
+            if i == left - 1:
                 prev_left = cur
             if i == left:
                 left_p = cur
-            if i == right + 1:
-                right_next = cur
-            cur = cur.next
-
-        prev, cur, rev_cur = right_next, left_p, None
-        for i in range(distance+1):
-            rev_cur = ListNode(cur.val, prev)
-            prev = rev_cur
-            cur = cur.next
-        if left == 1:
-            return rev_cur
-        prev_left.next = rev_cur
-        return head
+            next_cur = cur.next
+            if left < i <= right:
+                cur.next = prev_left.next
+                prev_left.next = cur
+                left_p.next = next_cur
+            cur = next_cur
+        return dummy.next
 # @lc code=end
