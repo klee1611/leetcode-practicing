@@ -46,21 +46,10 @@ class Solution:
         if n == 1:
             return 1
 
-        dp = [[None for i in range(n+1)] for j in range(n+1)]
-        def gen(start: int, end: int):
-            if start > end:
-                return 1
-            if start == end:
-                dp[start][end] = 1
-                return dp[start][end]
-            if None is not dp[start][end]:
-                return dp[start][end]
-            res = 0
-            for i in range(start, end+1):
-                left_trees, right_trees = gen(start, i-1), gen(i+1, end)
-                res += left_trees * right_trees
-            dp[start][end] = res
-            return dp[start][end]
-
-        return gen(1, n)
+        dp = [0 for i in range(n+1)]
+        dp[0] = 1
+        for i in range(1, n+1):
+            for j in range(1, i+1):
+                dp[i] += dp[j-1] * dp[i-j]
+        return dp[n]
 # @lc code=end
