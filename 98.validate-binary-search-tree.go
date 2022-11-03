@@ -62,30 +62,25 @@
  *     Right *TreeNode
  * }
  */
-const (
-	MaxInt32 = int(^uint32(0) >> 1)
-	MinInt32 = -MaxInt32 - 1
-)
+var last *TreeNode
 
-func isValidSubtree(node *TreeNode, upper int, lower int) bool {
-	if nil == node {
-		return true
-	}
-	if upper < node.Val || lower > node.Val {
-		return false
-	}
-	if !isValidSubtree(node.Left, node.Val-1, lower) ||
-		!isValidSubtree(node.Right, upper, node.Val+1) {
-		return false
-	}
-	return true
-}
-
-func isValidBST(root *TreeNode) bool {
+func validBST(root *TreeNode) bool {
 	if nil == root {
 		return true
 	}
-	return isValidSubtree(root, MaxInt32, MinInt32)
+	if !validBST(root.Left) {
+		return false
+	}
+	if last != nil && root.Val <= last.Val {
+		return false
+	}
+	last = root
+	return validBST(root.Right)
+}
+
+func isValidBST(root *TreeNode) bool {
+	last = nil
+	return validBST(root)
 }
 
 // @lc code=end
