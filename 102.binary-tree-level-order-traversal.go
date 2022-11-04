@@ -63,14 +63,12 @@ func levelOrder(root *TreeNode) [][]int {
 		return ret
 	}
 
-	var nodeQueue []*TreeNode
-	nodeQueue = append(nodeQueue, root)
-
+	nodeQueue := []*TreeNode{root}
 	for curQueue := nodeQueue; len(curQueue) > 0; {
 		var nextQueue []*TreeNode
-		var nextRet []int
-		for _, curNode := range curQueue {
-			nextRet = append(nextRet, curNode.Val)
+		nextRet := make([]int, len(curQueue))
+		for i, curNode := range curQueue {
+			nextRet[i] = curNode.Val
 			if nil != curNode.Left {
 				nextQueue = append(nextQueue, curNode.Left)
 			}
