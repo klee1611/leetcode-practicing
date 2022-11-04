@@ -63,7 +63,6 @@ func levelOrder(root *TreeNode) [][]int {
 		return ret
 	}
 
-	ret = append(ret, []int{root.Val})
 	var nodeQueue []*TreeNode
 	nodeQueue = append(nodeQueue, root)
 
@@ -71,18 +70,15 @@ func levelOrder(root *TreeNode) [][]int {
 		var nextQueue []*TreeNode
 		var nextRet []int
 		for _, curNode := range curQueue {
+			nextRet = append(nextRet, curNode.Val)
 			if nil != curNode.Left {
 				nextQueue = append(nextQueue, curNode.Left)
-				nextRet = append(nextRet, curNode.Left.Val)
 			}
 			if nil != curNode.Right {
 				nextQueue = append(nextQueue, curNode.Right)
-				nextRet = append(nextRet, curNode.Right.Val)
 			}
 		}
-		if len(nextRet) > 0 {
-			ret = append(ret, nextRet)
-		}
+		ret = append(ret, nextRet)
 		curQueue = nextQueue
 	}
 
